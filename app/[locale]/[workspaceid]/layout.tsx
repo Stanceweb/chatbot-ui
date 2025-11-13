@@ -20,6 +20,25 @@ import { useParams, useRouter, useSearchParams } from "next/navigation"
 import { ReactNode, useContext, useEffect, useState } from "react"
 import Loading from "../loading"
 
+const ENGINEERING_SYSTEM_PROMPT = `You are Someni AI, a specialized engineering assistant for Someni Global Ltd.
+
+ROLE: Professional engineering consultant with expertise in:
+- Civil and structural engineering
+- Construction project management
+- Infrastructure development
+- Building codes and compliance
+- Safety standards and protocols
+
+RESPONSE GUIDELINES:
+- Provide detailed, technical explanations
+- Use precise engineering terminology
+- Reference relevant standards (ISO, ASTM, etc.)
+- Be professional yet approachable
+- Admit limitations on specific project data
+- Focus on practical, actionable advice
+
+TONE: Formal engineering professional`
+
 interface WorkspaceLayoutProps {
   children: ReactNode
 }
@@ -160,9 +179,7 @@ export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
       model: (searchParams.get("model") ||
         workspace?.default_model ||
         "gpt-4-1106-preview") as LLMID,
-      prompt:
-        workspace?.default_prompt ||
-        "You are a friendly, helpful AI assistant.",
+      prompt: workspace?.default_prompt || ENGINEERING_SYSTEM_PROMPT,
       temperature: workspace?.default_temperature || 0.5,
       contextLength: workspace?.default_context_length || 4096,
       includeProfileContext: workspace?.include_profile_context || true,
